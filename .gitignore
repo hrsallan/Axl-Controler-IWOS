@@ -1,0 +1,50 @@
+# Credenciais e configurações locais
+.env
+.env.*
+!.env.example
+
+# Relatórios gerados
+exports/
+IWOS-*.xlsx
+~$*.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Ambientes virtuais
+.venv/
+venv/
+env/
+ENV/
+
+# Build e distribuição
+build/
+dist/
+*.egg-info/
+.eggs/
+.tools/
+
+# Editores e IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
