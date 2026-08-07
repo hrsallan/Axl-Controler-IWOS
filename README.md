@@ -149,7 +149,7 @@ Antes de executar, confirme que o ambiente possui:
 O atalho atualmente utilizado pelo script é:
 
 ```text
-C:\Users\anali\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\..appref-ms
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\..appref-ms
 ```
 
 Caso o atalho seja movido ou renomeado, atualize a constante `ATALHO_IWOS` em `script.py`.

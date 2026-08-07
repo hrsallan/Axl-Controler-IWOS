@@ -13,8 +13,19 @@ from pywinauto import Application, Desktop
 
 TITLE_RE = r"^IWOS$"
 ARQUIVO_ENV = Path(__file__).with_name(".env")
-ATALHO_IWOS = Path(
-    r"C:\Users\anali\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\..appref-ms"
+PASTA_APPDATA = Path(
+    os.environ.get(
+        "APPDATA",
+        Path.home() / "AppData" / "Roaming",
+    )
+)
+ATALHO_IWOS = (
+    PASTA_APPDATA
+    / "Microsoft"
+    / "Windows"
+    / "Start Menu"
+    / "Programs"
+    / "..appref-ms"
 )
 TEMPO_LIMITE_ABERTURA = 60
 TEMPO_LIMITE_BUSCA = 120
