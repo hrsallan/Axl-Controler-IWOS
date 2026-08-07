@@ -1,0 +1,252 @@
+LICENÇA PROPRIETÁRIA DE USO EXCLUSIVO — AXL CONTROLLER — IWOS
+Versão 1.0 — 7 de agosto de 2026
+
+Copyright © 2026. Todos os direitos reservados aos legítimos titulares dos
+direitos autorais e patrimoniais do Software.
+
+LICENCIADA EXCLUSIVA
+
+Razão social: MG SETEL SERVICOS EM TELECOMUNICACOES E ELETRICIDADE LTDA
+CNPJ: 65.293.946/0001-39
+
+AVISO IMPORTANTE
+
+Este documento estabelece as condições de uso do AXL Controller — IWOS e
+constitui uma licença proprietária, não uma licença de código aberto. O acesso
+ao código-fonte, sua posse ou sua disponibilidade em qualquer repositório não
+concede autorização de uso além da expressamente prevista neste documento.
+
+Para fins desta Licença, “Licenciante” significa o legítimo titular, ou o
+conjunto de legítimos titulares, dos direitos patrimoniais sobre o Software.
+“Licenciada” significa exclusivamente a pessoa jurídica identificada acima.
+
+1. DEFINIÇÕES
+
+1.1. “Software” significa o projeto AXL Controller — IWOS, incluindo seu
+código-fonte, código compilado, scripts, rotinas de automação, documentação,
+configurações de exemplo, estrutura de diretórios, modelos, atualizações e
+demais materiais próprios distribuídos com este arquivo.
+
+1.2. “Usuários Autorizados” são empregados, administradores e prestadores de
+serviço da Licenciada que necessitem utilizar o Software em benefício exclusivo
+da Licenciada, estejam sujeitos a deveres adequados de confidencialidade e
+tenham recebido autorização interna para acessar os sistemas e dados envolvidos.
+
+1.3. “Ambiente Autorizado” significa equipamento, máquina virtual ou
+infraestrutura controlada pela Licenciada e utilizada em suas operações internas.
+
+2. CONCESSÃO LIMITADA E EXCLUSIVA
+
+2.1. Sujeita ao cumprimento integral desta Licença, o Licenciante concede
+somente à Licenciada uma autorização de uso interno, limitada, revogável nas
+hipóteses aqui previstas, intransferível e não sublicenciável do Software.
+
+2.2. A Licenciada poderá:
+
+a) instalar e executar o Software em Ambientes Autorizados;
+b) permitir seu uso por Usuários Autorizados, exclusivamente em atividades
+   internas realizadas em benefício da própria Licenciada;
+c) criar o número de cópias de segurança razoavelmente necessário à continuidade
+   de suas operações, mantendo em todas elas este aviso de licença; e
+d) adaptar ou modificar internamente o Software para suas próprias necessidades,
+   desde que as modificações e obras derivadas permaneçam sujeitas a esta
+   Licença e não sejam disponibilizadas a terceiros.
+
+2.3. Nenhuma sociedade controladora, controlada, coligada, parceira, cliente,
+fornecedora ou integrante do mesmo grupo econômico da Licenciada é considerada
+automaticamente licenciada. O uso por outra pessoa física ou jurídica exige
+autorização prévia, específica e escrita do Licenciante.
+
+2.4. A exclusividade prevista neste documento identifica a Licenciada como a
+única entidade autorizada a utilizar o Software nos termos desta Licença. Ela
+não constitui cessão de direitos autorais ou patrimoniais, nem presume a
+transferência da titularidade do Software.
+
+3. RESERVA DE DIREITOS E TITULARIDADE
+
+3.1. O Software é licenciado, e não vendido. Todos os direitos que não tenham
+sido expressamente concedidos permanecem reservados ao Licenciante.
+
+3.2. Esta Licença não transfere à Licenciada direitos de propriedade intelectual,
+autoria, marcas, nomes empresariais, segredos comerciais ou outros ativos
+intangíveis do Licenciante ou de terceiros.
+
+3.3. Melhorias, correções ou modificações produzidas pela Licenciada não ampliam
+os direitos concedidos neste documento. A titularidade dessas contribuições
+deverá ser disciplinada em instrumento escrito próprio quando exigido pela lei
+ou pelas partes.
+
+4. USOS PROIBIDOS
+
+4.1. Sem autorização prévia e escrita do Licenciante, é proibido:
+
+a) vender, alugar, emprestar, doar, sublicenciar, ceder ou transferir o Software;
+b) distribuir, publicar, compartilhar, espelhar, transmitir ou disponibilizar
+   publicamente o Software, no todo ou em parte, inclusive em repositórios;
+c) utilizar o Software em benefício de terceiros, como serviço gerenciado,
+   bureau de serviços, software como serviço ou atividade comercial equivalente;
+d) permitir acesso a pessoas que não sejam Usuários Autorizados;
+e) copiar o Software além das hipóteses permitidas na seção 2;
+f) remover, ocultar ou alterar avisos de autoria, titularidade ou licença;
+g) utilizar nomes empresariais, marcas ou sinais distintivos associados ao
+   Software sem autorização específica;
+h) contornar mecanismos de controle de acesso ou utilizar credenciais sem
+   autorização; e
+i) realizar engenharia reversa, descompilação ou desmontagem, salvo na medida
+   estritamente permitida por norma legal cogente.
+
+5. CONFIDENCIALIDADE E SEGURANÇA
+
+5.1. Código-fonte não publicado, credenciais, arquivos `.env`, registros de
+execução, configurações internas, identificadores de sistemas, relatórios e
+dados extraídos devem ser protegidos contra acesso, alteração ou divulgação
+indevidos.
+
+5.2. A Licenciada deverá adotar controles de acesso compatíveis com o risco,
+aplicar o princípio do menor privilégio, manter credenciais individualizadas
+quando possível e restringir os relatórios exportados a pessoas com necessidade
+operacional legítima.
+
+5.3. Credenciais reais, dados pessoais e relatórios operacionais não deverão ser
+incluídos em repositórios, pacotes de distribuição, registros públicos ou canais
+de comunicação não autorizados.
+
+5.4. A Licenciada é responsável por verificar se seus Usuários Autorizados e
+prestadores cumprem esta seção e as políticas internas aplicáveis.
+
+6. PROTEÇÃO DE DADOS PESSOAIS
+
+6.1. O Software pode processar dados pessoais de empregados e terceiros,
+inclusive informações relacionadas à saúde, faltas e atestados, que podem estar
+sujeitas a proteção legal reforçada.
+
+6.2. A Licenciada é responsável por definir e documentar a finalidade e a base
+legal de cada tratamento, limitar a coleta ao necessário, controlar acessos,
+estabelecer retenção e descarte, atender os direitos dos titulares e adotar
+medidas técnicas e administrativas de segurança, conforme a legislação aplicável,
+inclusive a Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais — LGPD).
+
+6.3. Esta Licença não autoriza acesso a dados ou sistemas para os quais a
+Licenciada ou o Usuário Autorizado não possua permissão válida.
+
+7. COMPONENTES E DIREITOS DE TERCEIROS
+
+7.1. Esta Licença aplica-se somente aos elementos próprios do Software. Sistemas
+de terceiros, bibliotecas, ferramentas e componentes externos permanecem sujeitos
+a seus próprios termos e licenças.
+
+7.2. Entre as dependências declaradas pelo projeto estão pywinauto, distribuído
+sob licença BSD de 3 cláusulas; pandas, distribuído sob licença BSD de 3 cláusulas;
+e openpyxl, distribuído sob licença MIT. Os textos, avisos e atribuições exigidos
+por essas licenças deverão ser preservados.
+
+7.3. O IWOS, o Microsoft Windows, o Microsoft Excel, o ClickOnce e demais
+produtos ou marcas de terceiros não são licenciados por este documento. Esta
+Licença não representa endosso, parceria ou autorização concedida por seus
+respectivos titulares.
+
+7.4. Em caso de conflito, a licença do componente de terceiro prevalecerá
+exclusivamente sobre esse componente, sem converter o código próprio deste
+projeto em software de código aberto.
+
+8. REPOSITÓRIOS E DISPONIBILIDADE PÚBLICA
+
+8.1. A mera obtenção de uma cópia do Software não torna o destinatário um
+licenciado. Qualquer pessoa diferente da Licenciada deverá interromper o uso e
+solicitar autorização escrita ao Licenciante.
+
+8.2. A hospedagem do Software em plataforma de terceiros poderá conceder à
+plataforma e a seus usuários direitos técnicos mínimos previstos nos termos do
+respectivo serviço, como visualização ou criação de forks dentro da plataforma.
+Esses direitos não ampliam a autorização proprietária concedida por esta Licença.
+
+8.3. Para preservar confidencialidade e controle efetivo de acesso, o repositório
+deverá ser mantido privado, com acesso restrito aos Usuários Autorizados. Tornar
+o repositório público poderá inviabilizar, na prática, a confidencialidade e a
+exclusividade pretendidas.
+
+9. FUNCIONAMENTO, SUPORTE E ATUALIZAÇÕES
+
+9.1. Salvo acordo escrito em contrário, esta Licença não inclui obrigação de
+suporte, manutenção, treinamento, atualização, correção ou adaptação.
+
+9.2. O Software automatiza uma aplicação de terceiro por meio de sua interface
+gráfica. Alterações no IWOS, no Windows, em bibliotecas, na rede ou na estrutura
+dos controles podem exigir manutenção e afetar o funcionamento da automação.
+
+10. GARANTIAS E RESPONSABILIDADE
+
+10.1. Na máxima extensão permitida pela legislação aplicável, e salvo garantia
+expressamente assumida em instrumento escrito, o Software é fornecido no estado
+em que se encontra, sem promessa de disponibilidade contínua, ausência de erros,
+compatibilidade futura ou adequação a finalidade específica.
+
+10.2. A Licenciada deverá validar os resultados antes de utilizá-los em decisões
+trabalhistas, financeiras, regulatórias ou operacionais e manter procedimentos de
+recuperação e cópias de segurança adequados.
+
+10.3. Nenhuma disposição desta Licença exclui responsabilidade que não possa ser
+legalmente afastada. Eventuais limites de responsabilidade somente serão aplicados
+na extensão permitida pela legislação brasileira.
+
+11. VIGÊNCIA, VIOLAÇÃO E EXTINÇÃO
+
+11.1. Esta Licença vigora enquanto a Licenciada cumprir suas condições, sem
+prejuízo de prazo distinto estabelecido em instrumento escrito entre as partes.
+
+11.2. O descumprimento material autoriza o Licenciante a notificar a Licenciada
+para sanar a violação em até 10 (dez) dias úteis. Violações relacionadas à
+divulgação não autorizada, credenciais, segurança, dados pessoais ou propriedade
+intelectual poderão justificar suspensão imediata do uso para contenção do risco.
+
+11.3. Não sanada a violação no prazo aplicável, a autorização de uso ficará
+extinta. A Licenciada deverá cessar a execução do Software e eliminar as cópias
+sob seu controle, ressalvadas as que devam ser mantidas por obrigação legal,
+regulatória ou de cópia de segurança imutável, as quais permanecerão inacessíveis
+para uso comum e sujeitas às obrigações de confidencialidade.
+
+11.4. As cláusulas de titularidade, confidencialidade, proteção de dados,
+componentes de terceiros, responsabilidade e legislação aplicável sobrevivem à
+extinção desta Licença na medida necessária à sua finalidade.
+
+12. VERIFICAÇÃO DE CONFORMIDADE
+
+Mediante solicitação escrita e razoável do Licenciante, a Licenciada deverá
+cooperar para confirmar o cumprimento desta Licença, preservados seus segredos
+comerciais, a segurança de seus sistemas e os direitos dos titulares de dados.
+
+13. DISPOSIÇÕES GERAIS
+
+13.1. A tolerância ao descumprimento não implica renúncia, alteração ou novação.
+
+13.2. Se qualquer disposição for considerada inválida ou inexequível, as demais
+continuarão vigentes, e a disposição afetada será interpretada ou ajustada na
+menor medida necessária para preservar sua finalidade lícita.
+
+13.3. Alterações, ampliações de uso, sublicenças, cessões ou autorizações para
+terceiros somente serão válidas quando formalizadas por escrito por quem tenha
+poderes para representar o Licenciante.
+
+13.4. Esta Licença será interpretada de forma restritiva e constitui o conjunto
+de permissões aplicável à cópia do Software que a acompanha, sem substituir
+contratos escritos específicos celebrados entre as partes.
+
+14. LEGISLAÇÃO E FORO
+
+14.1. Aplicam-se as leis da República Federativa do Brasil, especialmente a Lei
+nº 9.609/1998, a Lei nº 9.610/1998 e a Lei nº 13.709/2018, sem prejuízo de outras
+normas aplicáveis.
+
+14.2. Fica eleito o foro da comarca da sede da Licenciada para resolver questões
+decorrentes desta Licença, salvo competência legal inderrogável ou foro diverso
+estabelecido em contrato escrito válido.
+
+15. AUTORIZAÇÕES ADICIONAIS
+
+Qualquer uso não previsto neste documento depende de autorização prévia e
+escrita do legítimo titular dos direitos patrimoniais do Software. A identificação
+formal do Licenciante, a cadeia de titularidade e os poderes dos signatários
+deverão ser confirmados em contrato próprio quando a Licença for empregada como
+instrumento contratual.
+
+FIM DA LICENÇA

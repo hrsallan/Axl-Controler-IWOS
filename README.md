@@ -264,6 +264,12 @@ Este projeto automatiza uma aplicação de terceiros pela interface gráfica. Al
 
 Os dados exportados podem conter informações pessoais e devem ser tratados de acordo com as políticas internas de acesso, retenção e privacidade da organização.
 
+## Licença
+
+Este projeto utiliza uma licença proprietária de uso exclusivo em favor de **MG SETEL SERVICOS EM TELECOMUNICACOES E ELETRICIDADE LTDA**, CNPJ **65.293.946/0001-39**. Não é permitida a utilização, distribuição, sublicença ou disponibilização do código a outras pessoas ou organizações sem autorização escrita do legítimo titular dos direitos.
+
+Consulte os termos completos no arquivo [LICENSE](./LICENSE). Para preservar a exclusividade e a confidencialidade pretendidas, o repositório deve permanecer **privado** e com acesso restrito.
+
 ---
 
 <div align="center">
