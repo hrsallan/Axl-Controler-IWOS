@@ -1,6 +1,7 @@
 import os
 import re
 import time
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 
@@ -8,7 +9,7 @@ import pandas as pd
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.worksheet.table import Table, TableStyleInfo
-from pywinauto import Application, Desktop
+from pywinauto import Application, Desktop, mouse
 
 
 TITLE_RE = r"^IWOS$"
@@ -28,7 +29,7 @@ ATALHO_IWOS = (
     / "..appref-ms"
 )
 TEMPO_LIMITE_ABERTURA = 60
-TEMPO_LIMITE_BUSCA = 120
+TEMPO_LIMITE_BUSCA = 300
 EMPRESAS = (
     ("MG Setel", "MGS"),
     ("Delta", "DELTA"),
@@ -182,6 +183,20 @@ def obter_janela_iwos():
     return app, app.window(handle=janela_candidata.handle)
 
 
+def expandir_item_menu(item):
+    """Expande um menu do IWOS pela interface de automação."""
+    try:
+        if item.get_expand_state() == 1:
+            return
+    except Exception:
+        pass
+
+    # O menu principal do IWOS ignora click_input() em algumas versões,
+    # embora exponha corretamente o padrão Invoke da UI Automation.
+    item.invoke()
+    time.sleep(0.5)
+
+
 def abrir_quadro_funcionarios(janela):
     """Abre Recursos Humanos > Quadro de Funcionários."""
     janela.set_focus()
@@ -197,8 +212,7 @@ def abrir_quadro_funcionarios(janela):
     if recursos_humanos is None:
         raise RuntimeError("O menu Recursos Humanos não foi encontrado no IWOS.")
 
-    recursos_humanos.click_input()
-    time.sleep(0.5)
+    expandir_item_menu(recursos_humanos)
     quadro_funcionarios = next(
         (
             item
@@ -212,7 +226,7 @@ def abrir_quadro_funcionarios(janela):
             "O item Quadro de Funcionários não foi encontrado em Recursos Humanos."
         )
 
-    quadro_funcionarios.click_input()
+    quadro_funcionarios.invoke()
     janela.child_window(
         auto_id="gridFuncionario",
         control_type="Table",
@@ -259,13 +273,23 @@ def adicionar_coluna_demissao(janela):
     if coluna_demissao is None:
         raise RuntimeError("A coluna Demissão não foi encontrada no Column Chooser.")
 
-    coluna_demissao.double_click_input()
-    limite = time.monotonic() + 10
-    while time.monotonic() < limite:
-        if grid.descendants(title="Demissão", control_type="Header"):
-            break
+    coluna_adicionada = False
+    for _ in range(3):
+        coluna_demissao.set_focus()
+        coluna_demissao.click_input()
         time.sleep(0.5)
-    else:
+        coluna_demissao.double_click_input()
+
+        limite = time.monotonic() + 5
+        while time.monotonic() < limite:
+            if grid.descendants(title="Demissão", control_type="Header"):
+                coluna_adicionada = True
+                break
+            time.sleep(0.5)
+        if coluna_adicionada:
+            break
+
+    if not coluna_adicionada:
         raise RuntimeError("A coluna Demissão não foi adicionada à grade.")
 
     botoes_fechar = janela_customization.descendants(
@@ -337,8 +361,7 @@ def abrir_painel_rh(janela, painel):
     if recursos_humanos is None:
         raise RuntimeError("O menu Recursos Humanos não foi encontrado no IWOS.")
 
-    recursos_humanos.click_input()
-    time.sleep(0.3)
+    expandir_item_menu(recursos_humanos)
     menu_paineis = next(
         (
             item
@@ -350,8 +373,7 @@ def abrir_painel_rh(janela, painel):
     if menu_paineis is None:
         raise RuntimeError("O submenu Painéis não foi encontrado em Recursos Humanos.")
 
-    menu_paineis.click_input()
-    time.sleep(0.3)
+    expandir_item_menu(menu_paineis)
     item_painel = next(
         (
             item
@@ -365,7 +387,7 @@ def abrir_painel_rh(janela, painel):
             f"O item {painel['menu']} não foi encontrado em Recursos Humanos > Painéis."
         )
 
-    item_painel.click_input()
+    item_painel.invoke()
     janela.child_window(
         auto_id=painel["controle"],
         control_type="Pane",
@@ -373,7 +395,10 @@ def abrir_painel_rh(janela, painel):
 
 
 def localizar_checkbox_periodo(janela):
-    for controle in janela.descendants(control_type="CheckBox"):
+    # O popup de filtro é criado depois da grade e não aparece na árvore
+    # armazenada pelo wrapper anterior. Reconectar à janela renova a árvore UIA.
+    janela_atual = localizar_janela_iwos() or janela
+    for controle in janela_atual.descendants(control_type="CheckBox"):
         if (
             controle.window_text() == "Earlier this year"
             and controle.rectangle().width() > 0
@@ -398,10 +423,13 @@ def aplicar_filtro_ano(janela, painel):
 
     cabecalho = cabecalhos[0]
     retangulo = cabecalho.rectangle()
-    coordenadas_filtro = (retangulo.width() - 5, retangulo.height() // 2)
-    cabecalho.move_mouse_input(coords=coordenadas_filtro)
+    coordenadas_filtro = (
+        retangulo.right - 8,
+        retangulo.top + retangulo.height() // 2,
+    )
+    mouse.move(coords=coordenadas_filtro)
     time.sleep(0.3)
-    cabecalho.click_input(coords=coordenadas_filtro)
+    mouse.click(coords=coordenadas_filtro)
 
     limite = time.monotonic() + 10
     checkbox = None
@@ -504,6 +532,46 @@ def aguardar_resultado_busca(nome_empresa):
     )
 
 
+def incluir_funcionarios_arquivados(janela):
+    """Ativa a inclusão de funcionários arquivados antes da consulta."""
+    titulo = "Incluir Funcionários Arquivados"
+    controles = [
+        controle
+        for controle in janela.descendants()
+        if (
+            controle.element_info.automation_id == "checkArquivado"
+            or controle.window_text().strip().casefold() == titulo.casefold()
+        )
+        and controle.element_info.control_type in {"Button", "CheckBox"}
+        and controle.is_visible()
+        and controle.is_enabled()
+        and controle.rectangle().width() > 0
+        and controle.rectangle().height() > 0
+    ]
+    if not controles:
+        raise RuntimeError(f"O botão {titulo} não foi encontrado.")
+
+    controle = controles[0]
+    try:
+        marcado = controle.get_toggle_state() != 0
+    except Exception:
+        marcado = False
+
+    if not marcado:
+        controle.click_input()
+
+    # Quando o controle expõe o padrão Toggle, confirma que ele permaneceu ativo.
+    try:
+        if controle.get_toggle_state() == 0:
+            raise RuntimeError(f"Não foi possível ativar {titulo}.")
+    except RuntimeError:
+        raise
+    except Exception:
+        pass
+
+    print(f"{titulo}: ativado.")
+
+
 def selecionar_e_buscar_empresa(janela, nome_empresa):
     combo = janela.child_window(
         auto_id="comboEmpresa",
@@ -520,6 +588,7 @@ def selecionar_e_buscar_empresa(janela, nome_empresa):
     if combo.selected_text().casefold() != nome_empresa.casefold():
         raise RuntimeError(f"Não foi possível selecionar a empresa {nome_empresa}.")
 
+    # O clique em "Incluir Funcionários Arquivados" está desativado.
     print(f"Empresa selecionada: {nome_empresa}. Executando a busca...")
     janela.child_window(
         auto_id="buttonGerar",
@@ -717,28 +786,34 @@ def extrair_grade_painel(janela, painel):
         )
 
     registros = {}
-    tentativas_sem_novidade = 0
-    for _ in range(300):
+    tentativas_sem_avanco = 0
+    for pagina in range(300):
         celulas_visiveis = obter_celulas()
         linhas_visiveis = obter_linhas_visiveis(celulas_visiveis)
-        novas_linhas = 0
         for numero_linha, dados in linhas_visiveis.items():
-            if numero_linha not in registros:
-                novas_linhas += 1
             registros[numero_linha] = dados
 
-        tentativas_sem_novidade = (
-            tentativas_sem_novidade + 1 if novas_linhas == 0 else 0
-        )
         botao_descer = obter_botao_rolagem("Page Down")
-        if botao_descer is None or tentativas_sem_novidade >= 3:
+        if botao_descer is None:
             break
+
+        assinatura_atual = assinatura_linhas(celulas_visiveis)
         pagina_mudou = clicar_e_aguardar_pagina(
             botao_descer,
-            assinatura_linhas(celulas_visiveis),
+            assinatura_atual,
         )
-        if not pagina_mudou:
-            tentativas_sem_novidade += 1
+        if pagina_mudou:
+            tentativas_sem_avanco = 0
+        else:
+            tentativas_sem_avanco += 1
+            if tentativas_sem_avanco >= 3:
+                break
+    else:
+        raise RuntimeError(
+            f"A paginação de {painel['aba']} excedeu 300 páginas sem confirmar "
+            "o fim da grade. A exportação foi interrompida para evitar um "
+            "relatório incompleto silencioso."
+        )
 
     linhas = [
         {coluna: registros[numero].get(coluna, "") for coluna in colunas}
@@ -814,10 +889,35 @@ def preparar_lista_exportacao(registros):
             for coluna in COLUNAS_EXPORTACAO
         }
         demissao = str(registro["Demissão"] or "").strip()
-        if not demissao or demissao.casefold() == "demissão":
+        possui_data_demissao = bool(
+            demissao and demissao.casefold() not in {"demissão", "n/a"}
+        )
+        disponibilidade = str(registro["Disponibilidade"] or "").strip()
+        if disponibilidade.casefold() == "arquivado" and possui_data_demissao:
+            registro["Disponibilidade"] = "Demitido"
+        if not possui_data_demissao:
             registro["Demissão"] = "N/A"
         lista.append(registro)
     return lista
+
+
+def normalizar_nome(nome):
+    texto = unicodedata.normalize("NFKD", str(nome or ""))
+    texto = "".join(
+        caractere
+        for caractere in texto
+        if not unicodedata.combining(caractere)
+    )
+    return " ".join(texto.casefold().split())
+
+
+def filtrar_painel_por_funcionarios(linhas, nomes_funcionarios):
+    nomes_funcionarios = {nome for nome in nomes_funcionarios if nome}
+    return [
+        linha
+        for linha in linhas
+        if normalizar_nome(linha.get("Funcionário", "")) in nomes_funcionarios
+    ]
 
 
 def salvar_excel(arquivo_excel, planilhas):
@@ -963,6 +1063,7 @@ def fechar_iwos():
 def main():
     data_execucao = datetime.now()
     pasta_exportacao = criar_pasta_exportacao(data_execucao)
+    nomes_funcionarios = set()
     _app, janela = obter_janela_iwos()
     abrir_quadro_funcionarios(janela)
     adicionar_coluna_demissao(janela)
@@ -981,6 +1082,10 @@ def main():
             raise RuntimeError("A aba RH - Quadro de Funcionários não está aberta.")
         _app, janela = selecionar_e_buscar_empresa(janela, nome_empresa)
         registros = extrair_registros(janela)
+        nomes_funcionarios.update(
+            normalizar_nome(dados.get("Nome", ""))
+            for dados in registros.values()
+        )
         print(f"{nome_empresa}: {len(registros)} registros identificados.")
         exportar_excel(
             registros,
@@ -992,7 +1097,12 @@ def main():
     for painel in PAINEIS:
         _app, janela = filtrar_e_buscar_painel(janela, painel)
         colunas, linhas = extrair_grade_painel(janela, painel)
-        print(f"{painel['aba']}: {len(linhas)} registros identificados.")
+        quantidade_total = len(linhas)
+        linhas = filtrar_painel_por_funcionarios(linhas, nomes_funcionarios)
+        print(
+            f"{painel['aba']}: {len(linhas)} de {quantidade_total} registros "
+            "correspondem aos funcionários exportados do MGS e da Delta."
+        )
         exportar_excel_painel(
             colunas,
             linhas,

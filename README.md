@@ -32,7 +32,7 @@ Ao executar o projeto, o script realiza as seguintes etapas:
 7. Deixa abertas as abas globais:
    - `Recursos Humanos → Painéis → Faltas`
    - `Recursos Humanos → Painéis → Atestados`
-8. Consulta o Quadro de Funcionários para:
+8. Consulta o Quadro de Funcionários com a seleção atual de `Incluir Funcionários Arquivados`, sem clicar nessa opção, para:
    - `MG Setel`
    - `Delta`
 9. Percorre toda a grade virtualizada, página por página, e exporta os funcionários de cada empresa.
@@ -41,9 +41,10 @@ Ao executar o projeto, o script realiza as seguintes etapas:
     - na coluna `Data`, em Faltas;
     - na coluna `Início`, em Atestados.
 12. Percorre integralmente as duas grades usando a barra vertical do DevExpress.
-13. Exporta todas as colunas dos painéis, exceto `Ações`.
-14. Salva os quatro relatórios em uma pasta identificada pela data e hora da execução.
-15. Fecha o IWOS automaticamente após a conclusão bem-sucedida.
+13. Mantém nos painéis apenas registros cujo funcionário consta nas listas exportadas do MGS ou da Delta, comparando nomes sem diferenciar maiúsculas, acentos ou espaços extras.
+14. Exporta todas as colunas dos painéis, exceto `Ações`.
+15. Salva os quatro relatórios em uma pasta identificada pela data e hora da execução.
+16. Fecha o IWOS automaticamente após a conclusão bem-sucedida.
 
 Se ocorrer um erro antes da conclusão, o IWOS permanece aberto para facilitar o diagnóstico.
 
@@ -78,9 +79,13 @@ Os arquivos de funcionários são separados por empresa e contêm:
 - Disponibilidade
 - Demissão
 
+No Excel final, funcionários com disponibilidade `Arquivado` e data de demissão
+preenchida são classificados como `Demitido`. Sem data de demissão, o status
+`Arquivado` é preservado.
+
 ### Faltas
 
-O relatório é global, sem divisão por empresa, e contém:
+O relatório reúne registros dos funcionários encontrados nas planilhas do MGS e da Delta, sem divisão por empresa, e contém:
 
 - ID
 - Centro
@@ -92,7 +97,7 @@ O relatório é global, sem divisão por empresa, e contém:
 
 ### Atestados
 
-O relatório também é global e contém:
+O relatório também reúne registros dos funcionários encontrados nas planilhas do MGS e da Delta, sem divisão por empresa, e contém:
 
 - ID
 - Centro
@@ -210,7 +215,8 @@ As grades do IWOS são virtualizadas: apenas as linhas visíveis existem na árv
 - clica no botão real `Page Down`;
 - aguarda os índices visíveis mudarem;
 - acumula os dados sem duplicar linhas;
-- encerra somente quando o final real da barra é alcançado.
+- encerra após confirmar em três tentativas que a grade não avançou;
+- interrompe com erro explícito se ultrapassar 300 páginas, em vez de salvar uma coleta possivelmente incompleta.
 
 Essa abordagem é utilizada principalmente nos painéis de Faltas e Atestados, que podem possuir grandes volumes de dados.
 
@@ -263,12 +269,6 @@ Garanta que a sessão esteja desbloqueada e que não existam janelas cobrindo o 
 Este projeto automatiza uma aplicação de terceiros pela interface gráfica. Alterações visuais, atualização do DevExpress ou mudanças nos nomes dos controles do IWOS podem exigir manutenção nos seletores.
 
 Os dados exportados podem conter informações pessoais e devem ser tratados de acordo com as políticas internas de acesso, retenção e privacidade da organização.
-
-## Licença
-
-Este projeto utiliza uma licença proprietária de uso exclusivo em favor de **MG SETEL SERVICOS EM TELECOMUNICACOES E ELETRICIDADE LTDA**, CNPJ **65.293.946/0001-39**. Não é permitida a utilização, distribuição, sublicença ou disponibilização do código a outras pessoas ou organizações sem autorização escrita do legítimo titular dos direitos.
-
-Consulte os termos completos no arquivo [LICENSE](./LICENSE). Para preservar a exclusividade e a confidencialidade pretendidas, o repositório deve permanecer **privado** e com acesso restrito.
 
 ---
 
